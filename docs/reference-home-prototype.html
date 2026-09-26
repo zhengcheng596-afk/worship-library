@@ -1,0 +1,269 @@
+<div id="worship-home-prototype" data-device="phone" data-density="spacious" data-tone="moss">
+  <div class="wh-preview-switch" role="group" aria-label="预览设备">
+    <button type="button" class="wh-preview-button is-active" data-preview="phone" aria-pressed="true">iPhone</button>
+    <button type="button" class="wh-preview-button" data-preview="desktop" aria-pressed="false">Windows</button>
+  </div>
+
+  <section class="wh-app" aria-label="Worship Library 首页原型">
+    <header class="wh-app-header">
+      <div class="wh-brand"><span class="wh-brand-mark" aria-hidden="true">W</span><span>Worship Library</span></div>
+      <div class="wh-header-actions">
+        <button type="button" class="wh-add" aria-label="新增歌曲"><i data-lucide="plus" aria-hidden="true"></i><span>新增歌曲</span></button>
+        <button type="button" class="wh-account" aria-label="账户"><i data-lucide="user-round" aria-hidden="true"></i></button>
+      </div>
+    </header>
+
+    <main class="wh-main">
+      <div class="wh-heading"><h1>我的歌曲</h1><p>音乐、歌词与敬拜资料</p></div>
+
+      <div class="wh-tools">
+        <label class="wh-search">
+          <i data-lucide="search" aria-hidden="true"></i>
+          <span class="wh-visually-hidden">搜索歌曲</span>
+          <input id="wh-query" type="search" placeholder="搜索歌曲、歌手、歌词或标签" autocomplete="off">
+        </label>
+        <div class="wh-filters">
+          <label class="wh-select-wrap">
+            <span class="wh-visually-hidden">分类筛选</span>
+            <select id="wh-category"><option value="">所有分类</option><option>赞美</option><option>祷告</option><option>宣告</option><option>回应</option></select>
+            <i data-lucide="chevron-down" aria-hidden="true"></i>
+          </label>
+          <label class="wh-select-wrap">
+            <span class="wh-visually-hidden">主题筛选</span>
+            <select id="wh-theme"><option value="">所有主题</option><option>盼望</option><option>安静</option><option>信靠</option><option>恩典</option><option>信实</option></select>
+            <i data-lucide="chevron-down" aria-hidden="true"></i>
+          </label>
+          <button type="button" id="wh-reset" class="wh-reset" hidden>清除</button>
+        </div>
+      </div>
+
+      <div class="wh-list-heading"><h2 id="wh-result-label">全部歌曲</h2><span id="wh-result-count" aria-live="polite"></span></div>
+      <div id="wh-song-list" class="wh-song-list" aria-live="polite"></div>
+    </main>
+  </section>
+</div>
+
+<style>
+  #worship-home-prototype {
+    --wh-page: light-dark(#f7f8f5, #121713);
+    --wh-paper: light-dark(#ffffff, #1b231d);
+    --wh-text: light-dark(#1a241d, #edf3ed);
+    --wh-muted: light-dark(#69736b, #a8b4a8);
+    --wh-line: light-dark(#e6eae4, #354036);
+    --wh-soft: light-dark(#f2f5f0, #283329);
+    --wh-accent: light-dark(#395f4d, #9cc6a9);
+    --wh-accent-text: light-dark(#ffffff, #162117);
+    --wh-focus: light-dark(#799f86, #aed7b9);
+    color-scheme: light dark;
+    color: var(--wh-text);
+    font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    width: 100%;
+  }
+  #worship-home-prototype[data-tone="blue"] {
+    --wh-accent: light-dark(#315a74, #9ec7df);
+    --wh-accent-text: light-dark(#ffffff, #12232c);
+    --wh-focus: light-dark(#83aac2, #9ec7df);
+  }
+  #worship-home-prototype * { box-sizing: border-box; }
+  #worship-home-prototype button, #worship-home-prototype input, #worship-home-prototype select { font: inherit; }
+  #worship-home-prototype button { cursor: pointer; }
+  #worship-home-prototype button:focus-visible, #worship-home-prototype input:focus-visible, #worship-home-prototype select:focus-visible { outline: 2px solid var(--wh-focus); outline-offset: 2px; }
+  #worship-home-prototype .wh-visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+  #worship-home-prototype .wh-preview-switch { display: flex; justify-content: center; gap: 4px; margin-bottom: 16px; }
+  #worship-home-prototype .wh-preview-button { border: 0; background: transparent; color: var(--wh-muted); padding: 8px 14px; border-radius: 8px; font-size: 13px; }
+  #worship-home-prototype .wh-preview-button.is-active { background: var(--wh-paper); color: var(--wh-text); box-shadow: 0 1px 5px light-dark(#1a241d12, #00000040); }
+  #worship-home-prototype .wh-app { margin: 0 auto; width: min(100%, 390px); min-height: 650px; background: var(--wh-paper); border: 1px solid var(--wh-line); border-radius: 20px; box-shadow: 0 16px 45px light-dark(#1a241d12, #00000033); overflow: hidden; }
+  #worship-home-prototype[data-device="desktop"] .wh-app { width: min(100%, 900px); min-height: 560px; border-radius: 14px; }
+  #worship-home-prototype .wh-app-header { min-height: 66px; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 0 20px; border-bottom: 1px solid var(--wh-line); }
+  #worship-home-prototype .wh-brand { display: flex; align-items: center; gap: 10px; font-size: 15px; font-weight: 600; letter-spacing: -.02em; white-space: nowrap; }
+  #worship-home-prototype .wh-brand-mark { display: grid; place-items: center; width: 28px; height: 28px; border-radius: 8px; background: var(--wh-accent); color: var(--wh-accent-text); font-size: 15px; font-weight: 600; }
+  #worship-home-prototype .wh-header-actions { display: flex; align-items: center; gap: 8px; }
+  #worship-home-prototype .wh-add { display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 38px; border: 0; border-radius: 9px; background: var(--wh-accent); color: var(--wh-accent-text); padding: 0 11px; font-size: 13px; font-weight: 600; white-space: nowrap; }
+  #worship-home-prototype .wh-add svg { width: 17px; height: 17px; }
+  #worship-home-prototype .wh-account { display: grid; place-items: center; width: 38px; height: 38px; border: 1px solid var(--wh-line); border-radius: 9px; background: var(--wh-paper); color: var(--wh-muted); }
+  #worship-home-prototype .wh-account svg { width: 18px; height: 18px; }
+  #worship-home-prototype .wh-main { padding: 30px 20px 38px; }
+  #worship-home-prototype .wh-heading h1 { margin: 0; font-size: 26px; line-height: 1.2; letter-spacing: -.045em; font-weight: 600; }
+  #worship-home-prototype .wh-heading p { margin: 8px 0 0; color: var(--wh-muted); font-size: 13px; }
+  #worship-home-prototype .wh-tools { margin-top: 27px; }
+  #worship-home-prototype .wh-search { display: flex; align-items: center; gap: 9px; height: 48px; padding: 0 14px; border: 1px solid var(--wh-line); border-radius: 11px; background: var(--wh-page); color: var(--wh-muted); }
+  #worship-home-prototype .wh-search:focus-within { outline: 2px solid var(--wh-focus); outline-offset: 2px; }
+  #worship-home-prototype .wh-search svg { width: 18px; height: 18px; flex: none; }
+  #worship-home-prototype .wh-search input { display: block; min-width: 0; width: 100%; border: 0; outline: 0; background: transparent; color: var(--wh-text); font-size: 16px; }
+  #worship-home-prototype .wh-search input::placeholder { color: var(--wh-muted); opacity: 1; }
+  #worship-home-prototype .wh-filters { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin-top: 11px; }
+  #worship-home-prototype .wh-select-wrap { position: relative; min-width: 0; }
+  #worship-home-prototype .wh-select-wrap select { appearance: none; height: 38px; max-width: 150px; border: 1px solid var(--wh-line); border-radius: 8px; padding: 0 31px 0 12px; background: var(--wh-paper); color: var(--wh-text); font-size: 13px; }
+  #worship-home-prototype .wh-select-wrap svg { position: absolute; right: 10px; top: 11px; width: 15px; height: 15px; pointer-events: none; color: var(--wh-muted); }
+  #worship-home-prototype .wh-reset { min-height: 38px; border: 0; background: transparent; padding: 0 5px; color: var(--wh-accent); font-size: 13px; }
+  #worship-home-prototype .wh-reset[hidden] { display: none; }
+  #worship-home-prototype .wh-list-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-top: 31px; padding-bottom: 12px; border-bottom: 1px solid var(--wh-line); }
+  #worship-home-prototype .wh-list-heading h2 { margin: 0; font-size: 15px; font-weight: 600; }
+  #worship-home-prototype .wh-list-heading span { color: var(--wh-muted); font-size: 12px; }
+  #worship-home-prototype .wh-song-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; width: 100%; min-height: 84px; padding: 15px 2px; border: 0; border-bottom: 1px solid var(--wh-line); text-align: left; background: transparent; color: var(--wh-text); }
+  #worship-home-prototype .wh-song-row:hover { background: var(--wh-soft); }
+  #worship-home-prototype .wh-song-copy { min-width: 0; }
+  #worship-home-prototype .wh-song-name { display: block; font-size: 16px; line-height: 1.35; font-weight: 600; }
+  #worship-home-prototype .wh-song-meta { display: flex; gap: 6px; align-items: center; margin-top: 7px; color: var(--wh-muted); font-size: 12px; line-height: 1.35; flex-wrap: wrap; }
+  #worship-home-prototype .wh-song-files { display: block; margin-top: 5px; color: var(--wh-accent); font-size: 11px; line-height: 1.35; }
+  #worship-home-prototype .wh-dot { color: var(--wh-muted); }
+  #worship-home-prototype .wh-song-end { display: flex; align-items: center; gap: 11px; flex: none; }
+  #worship-home-prototype .wh-key { display: inline-flex; align-items: center; justify-content: center; min-width: 31px; height: 28px; padding: 0 6px; border-radius: 6px; background: var(--wh-soft); color: var(--wh-accent); font-size: 12px; font-weight: 600; }
+  #worship-home-prototype .wh-chevron { display: grid; place-items: center; width: 20px; height: 28px; color: var(--wh-muted); }
+  #worship-home-prototype .wh-chevron svg { width: 17px; height: 17px; }
+  #worship-home-prototype .wh-empty { padding: 38px 10px; text-align: center; }
+  #worship-home-prototype .wh-empty strong { display: block; font-size: 15px; font-weight: 600; }
+  #worship-home-prototype .wh-empty span { display: block; margin-top: 7px; color: var(--wh-muted); font-size: 13px; }
+  #worship-home-prototype .wh-empty button { margin-top: 16px; min-height: 38px; padding: 0 13px; border: 0; border-radius: 8px; background: var(--wh-accent); color: var(--wh-accent-text); font-size: 13px; }
+  #worship-home-prototype .wh-toast { margin-top: 16px; padding: 10px 12px; border-radius: 8px; background: var(--wh-soft); color: var(--wh-text); font-size: 13px; }
+  #worship-home-prototype .wh-toast[hidden] { display: none; }
+  #worship-home-prototype[data-device="desktop"] .wh-app-header { padding: 0 36px; }
+  #worship-home-prototype[data-device="desktop"] .wh-main { padding: 36px 48px 48px; }
+  #worship-home-prototype[data-device="desktop"] .wh-heading h1 { font-size: 30px; }
+  #worship-home-prototype[data-device="desktop"] .wh-tools { display: flex; align-items: center; gap: 12px; }
+  #worship-home-prototype[data-device="desktop"] .wh-search { flex: 1; }
+  #worship-home-prototype[data-device="desktop"] .wh-filters { flex: none; margin-top: 0; }
+  #worship-home-prototype[data-density="compact"] .wh-song-row { min-height: 67px; padding-top: 9px; padding-bottom: 9px; }
+  #worship-home-prototype[data-density="compact"] .wh-song-meta { margin-top: 4px; }
+  @media (max-width: 600px) {
+    #worship-home-prototype[data-device="desktop"] .wh-tools { display: block; }
+    #worship-home-prototype[data-device="desktop"] .wh-filters { margin-top: 11px; }
+    #worship-home-prototype[data-device="desktop"] .wh-main { padding: 30px 20px 38px; }
+  }
+  @media (max-width: 360px) {
+    #worship-home-prototype .wh-app-header { padding: 0 14px; }
+    #worship-home-prototype .wh-brand { font-size: 13px; }
+    #worship-home-prototype .wh-add span { display: none; }
+    #worship-home-prototype .wh-add { width: 38px; padding: 0; }
+    #worship-home-prototype .wh-main { padding-left: 16px; padding-right: 16px; }
+    #worship-home-prototype .wh-select-wrap select { max-width: 132px; }
+  }
+</style>
+
+<script>
+  (() => {
+    const root = document.getElementById('worship-home-prototype');
+    const query = root.querySelector('#wh-query');
+    const category = root.querySelector('#wh-category');
+    const theme = root.querySelector('#wh-theme');
+    const reset = root.querySelector('#wh-reset');
+    const list = root.querySelector('#wh-song-list');
+    const count = root.querySelector('#wh-result-count');
+    const label = root.querySelector('#wh-result-label');
+    const songs = [
+      { name: '祢是我的盼望', version: '现场版', key: 'G', category: '赞美', themes: ['盼望', '信靠'], lyrics: '盼望 同在', files: ['音频', 'PPT', '乐谱'] },
+      { name: '在祢同在里', version: '钢琴版', key: 'D', category: '祷告', themes: ['安静'], lyrics: '安静 祷告', files: ['音频', '乐谱'] },
+      { name: '信实直到永远', version: '录音版', key: 'C', category: '宣告', themes: ['信实', '信靠'], lyrics: '信实 永远', files: ['音频', 'PPT'] },
+      { name: '恩典的回应', version: '中文版', key: 'A', category: '回应', themes: ['恩典'], lyrics: '恩典 回应', files: ['PPT', '乐谱'] },
+      { name: 'Ever Faithful', version: 'English version', key: 'E', category: '赞美', themes: ['信实'], lyrics: 'faithful hope', files: ['音频'] }
+    ];
+    const toast = document.createElement('div');
+    toast.className = 'wh-toast';
+    toast.hidden = true;
+    toast.setAttribute('aria-live', 'polite');
+    root.querySelector('.wh-main').appendChild(toast);
+    const design = { density: 'spacious', tone: 'moss', content: 'songs' };
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.hidden = false;
+      clearTimeout(showToast.timer);
+      showToast.timer = setTimeout(() => { toast.hidden = true; }, 3000);
+    }
+    function iconize() {
+      if (globalThis.lucide) lucide.createIcons({ attrs: { width: 16, height: 16 } });
+    }
+    function renderSongs() {
+      if (design.content !== 'songs') {
+        count.textContent = '';
+        label.textContent = '全部歌曲';
+        reset.hidden = true;
+        list.replaceChildren();
+        const empty = document.createElement('div');
+        empty.className = 'wh-empty';
+        if (design.content === 'empty') {
+          empty.innerHTML = '<strong>还没有歌曲</strong><span>新增第一首歌，开始建立你的资料库。</span><button type="button">新增第一首歌</button>';
+          empty.querySelector('button').addEventListener('click', () => showToast('下一页：新增歌曲'));
+        } else {
+          empty.innerHTML = '<strong>歌曲暂时无法加载</strong><span>请检查网络连接后重试。</span><button type="button">重试</button>';
+          empty.querySelector('button').addEventListener('click', () => showToast('正在重新加载歌曲'));
+        }
+        list.appendChild(empty);
+        return;
+      }
+      const term = query.value.trim().toLocaleLowerCase();
+      const categoryValue = category.value;
+      const themeValue = theme.value;
+      const filtered = songs.filter(song => {
+        const searchText = [song.name, song.version, song.category, ...song.themes, song.lyrics].join(' ').toLocaleLowerCase();
+        return (!term || searchText.includes(term)) && (!categoryValue || song.category === categoryValue) && (!themeValue || song.themes.includes(themeValue));
+      });
+      count.textContent = `${filtered.length} 首`;
+      label.textContent = term || categoryValue || themeValue ? '筛选结果' : '全部歌曲';
+      reset.hidden = !(term || categoryValue || themeValue);
+      list.replaceChildren();
+      if (filtered.length === 0) {
+        const empty = document.createElement('div');
+        empty.className = 'wh-empty';
+        empty.innerHTML = '<strong>没有找到歌曲</strong><span>试试其他关键词，或清除筛选条件。</span>';
+        list.appendChild(empty);
+        return;
+      }
+      filtered.forEach(song => {
+        const row = document.createElement('button');
+        row.type = 'button';
+        row.className = 'wh-song-row';
+        row.setAttribute('aria-label', `打开 ${song.name} 的歌曲详情`);
+        const copy = document.createElement('span');
+        copy.className = 'wh-song-copy';
+        const name = document.createElement('span');
+        name.className = 'wh-song-name';
+        name.textContent = song.name;
+        const meta = document.createElement('span');
+        meta.className = 'wh-song-meta';
+        meta.textContent = `${song.version} · ${song.category} · ${song.themes[0]}`;
+        const files = document.createElement('span');
+        files.className = 'wh-song-files';
+        files.textContent = song.files.join('  ·  ');
+        copy.append(name, meta, files);
+        const end = document.createElement('span');
+        end.className = 'wh-song-end';
+        const key = document.createElement('span');
+        key.className = 'wh-key';
+        key.textContent = song.key;
+        const chevron = document.createElement('span');
+        chevron.className = 'wh-chevron';
+        chevron.innerHTML = '<i data-lucide="chevron-right" aria-hidden="true"></i>';
+        end.append(key, chevron);
+        row.append(copy, end);
+        row.addEventListener('click', () => showToast(`下一页：${song.name} 的歌曲详情`));
+        list.appendChild(row);
+      });
+      iconize();
+    }
+
+    query.addEventListener('input', renderSongs);
+    category.addEventListener('change', renderSongs);
+    theme.addEventListener('change', renderSongs);
+    reset.addEventListener('click', () => { query.value = ''; category.value = ''; theme.value = ''; renderSongs(); query.focus(); });
+    root.querySelectorAll('[data-preview]').forEach(button => button.addEventListener('click', () => {
+      root.dataset.device = button.dataset.preview;
+      root.querySelectorAll('[data-preview]').forEach(other => {
+        const active = other === button;
+        other.classList.toggle('is-active', active);
+        other.setAttribute('aria-pressed', String(active));
+      });
+    }));
+    root.querySelector('.wh-add').addEventListener('click', () => showToast('下一页：新增歌曲'));
+    root.querySelector('.wh-account').addEventListener('click', () => showToast('账户菜单：退出登录'));
+
+    renderSongs();
+    function renderDesign() { root.dataset.density = design.density; root.dataset.tone = design.tone; renderSongs(); }
+    if (globalThis.Tweak) {
+      const tweak = new Tweak({ container: root.querySelector('.wh-app'), onChange: renderDesign });
+      tweak.addSelect(design, 'density', { label: '列表间距', options: [{ label: '舒展', value: 'spacious' }, { label: '紧凑', value: 'compact' }] });
+      tweak.addSelect(design, 'tone', { label: '强调色', options: [{ label: '墨绿', value: 'moss' }, { label: '深蓝', value: 'blue' }] });
+      tweak.addSelect(design, 'content', { label: '页面状态', options: [{ label: '有歌曲', value: 'songs' }, { label: '空资料库', value: 'empty' }, { label: '加载失败', value: 'error' }] });
+    }
+  })();
+</script>

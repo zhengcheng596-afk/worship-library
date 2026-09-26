@@ -1,0 +1,23 @@
+{
+  "passed": true,
+  "checks": [
+    "empty library",
+    "create song",
+    "multiple attachments and kinds",
+    "audio playback",
+    "bilingual lyrics",
+    "cancel edit preserves attachment",
+    "lyric search and filters",
+    "mobile overflow",
+    "export backup",
+    "delete song",
+    "restore backup",
+    "restored attachment byte equality",
+    "corrupt backup preserves library",
+    "reload persistence",
+    "offline production app",
+    "failed restore write preserves library",
+    "edit and deferred attachment deletion"
+  ],
+  "browser": "153.0.8010.0"
+}
